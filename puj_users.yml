@@ -1,0 +1,27 @@
+---
+- hosts: staging
+  become: true
+  tasks:
+    - name: Install akarpov
+      user:
+        name: akarpov
+        createhome: yes
+    - name: Deploy akarpov's public key
+      authorized_key:
+        user: akarpov
+        state: present
+        key: "{{ lookup('file', 'public/akarpov/id_rsa.pub')}}"
+    - name: Install martin
+      user:
+        name: martin
+        createhome: yes
+    - name: Deploy martin's public key
+      authorized_key:
+        user: martin
+        state: present
+        key: "{{ lookup('file', 'public/martin/id_rsa.pub')}}"
+    - name: Install a testing user
+      user:
+        name: lucy
+        createhome: yes
+        comment: Lucy the Organizer and Tester
