@@ -5,6 +5,7 @@
     - name: Install akarpov
       user:
         name: akarpov
+        groups: admin
         createhome: yes
     - name: Deploy akarpov's public key
       authorized_key:
@@ -14,6 +15,7 @@
     - name: Install martin
       user:
         name: martin
+        groups: admin
         createhome: yes
     - name: Deploy martin's public key
       authorized_key:
