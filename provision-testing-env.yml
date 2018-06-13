@@ -12,19 +12,9 @@
       pip:
         name: pipenv
         state: present
-    - name: Install a testing user
-      user:
-        name: lucy
-        comment: Lucy the Organizer and Tester
     - name: Install requirements
       copy:
         src: testing-requirements.txt
-        dest: /opt/PUJ/testing-requirements.txt
-        owner: ubuntu
-        group: ubuntu
-    # - name: Manually create the initial virtualenv
-    #   command: "virtualenv /home/ubuntu/pujtest-env --clear -p python2.7"
-    - name: Install reqs
-      pip:
-        requirements: /opt/PUJ/testing-requirements.txt
-        virtualenv: /home/ubuntu/pujtest-env
+        dest: /home/lucy/puj/requirements.txt
+        owner: lucy
+        group: lucy

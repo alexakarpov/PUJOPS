@@ -1,0 +1,10 @@
+---
+- hosts: staging
+  become: true
+  tasks:
+    - name: Configure Apache
+      copy:
+        src:
+        dest: /etc/apache2/sites-available/000-default
+        owner: root
+        group: root
