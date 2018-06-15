@@ -1,0 +1,32 @@
+---
+- hosts: staging
+  become: true
+  tasks:
+    - name: Install system-wide packages
+      apt: name={{item}} state=present
+      with_items:
+        - python-pip
+        - python-dev
+        - libtiff5-dev
+        - libjpeg8-dev
+        - zlib1g-dev
+        - libfreetype6-dev
+        - liblcms2-dev
+        - libwebp-dev
+        - tcl8.6-dev
+        - tk8.6-dev
+        - python-tk
+    - name: Install virtualenv
+      pip:
+        name: virtualenv
+        state: present
+    - name: Install pipenv
+      pip:
+        name: pipenv
+        state: present
+    - name: Install requirements
+      copy:
+        src: testing-requirements.txt
+        dest: /home/lucy/requirements.txt
+        owner: lucy
+        group: lucy

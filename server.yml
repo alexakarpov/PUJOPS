@@ -2,9 +2,12 @@
 - hosts: staging
   become: true
   tasks:
-    - name: Configure Apache
+    - name: Configure Apache part 1
       copy:
-        src:
-        dest: /etc/apache2/sites-available/000-default
-        owner: root
-        group: root
+          src: "{{ item.src }}"
+          dest: "{{ item.dest }}"
+      with_items:
+        - src: "server_config/apache2.conf"
+          dest: "/etc/apache2/apache2.conf"
+        - src: "server_config/000-default.conf"
+          dest: "/etc/apache2/sites-available/000-default.conf"

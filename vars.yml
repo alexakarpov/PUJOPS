@@ -1,0 +1,3 @@
+---
+deployment_dest: "/opt/PUJ"
+deployment_src: "/home/akarpov/payupjack"

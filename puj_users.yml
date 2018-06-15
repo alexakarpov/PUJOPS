@@ -11,7 +11,7 @@
       authorized_key:
         user: akarpov
         state: present
-        key: "{{ lookup('file', 'public/akarpov/id_rsa.pub')}}"
+        key: "{{ lookup('file', 'public/akarpov/akarpov_local.pub')}}"
     - name: Install martin
       user:
         name: martin
