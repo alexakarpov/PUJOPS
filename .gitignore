@@ -1,3 +1,4 @@
 *~
 *.retry
 secrets/
+.DS_Store
