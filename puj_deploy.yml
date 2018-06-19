@@ -4,12 +4,22 @@
     - vars.yml
   become: true
   tasks:
-    - name: Ensure dest folder exists
+    - name: Deploy the repo
+      become: yes
+      become_user: ubuntu
+      git:
+        repo: 'git@bitbucket.org:teampuj/payupjack.git'
+        version: "{{ deployment_version }}"
+        dest: "{{ deployment_dest }}"
+        depth: 1
+    - name: Ensure log dir exists
       file:
-        path: "{{ deployment_dest }}"
+        name: /opt/PUJ/logs
         state: directory
         owner: ubuntu
         group: admin
-        mode: 0755
-    - name: Fake it till you make it
-      shell: "cp -r {{deployment_src}}/* {{deployment_dest}}"
+    - name: restart Apache
+      service:
+        name: apache2
+        state: restarted
+        enabled: yes

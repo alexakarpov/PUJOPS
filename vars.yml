@@ -1,3 +1,3 @@
 ---
 deployment_dest: "/opt/PUJ"
-deployment_src: "/home/akarpov/payupjack"
+deployment_version: "finix_api_update"
