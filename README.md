@@ -6,6 +6,7 @@ There's no longer a need to manually clone the repo on the deployment target box
 (*the 'deployment_dest' variable is still there just in case, but we're not going to be changing it*)
 ```
 ---
+deployment_dest: "/opt/PUJ" # don't change me
 deployment_version: "finix_api_update"
 
 ```
