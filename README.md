@@ -1,22 +1,12 @@
 # Ansible inventory file and playbooks for managing the PayUpJack infrastructure
 
 ## Deployemnts
-While we're waiting on admin access to PayUpJack repo on Bitbucket, where we would configure *ssh* access, the deployments process isn't fully automated yet. There are two steps:
-
-### Create your own copy of the PUJ repo on the destination box
-(this needs to be done only once)
-e.g.,
-```
-> git clone https://alexakarpov@bitbucket.org/teampuj/payupjack.git
-```
-NOTE: this is done over https and will require you to authenticate (i.e. if you're not me, edit the URL according ;) ).
-
-### Record the path to the created folder in vars.yml
-e.g.,
+Now that we've gotten our own man `ubuntu` running things on the box, the deployment is now closer to full automation.
+There's no longer a need to manually clone the repo on the deployment target box. There's now only one variable that we need to provide in the vars.yml file - the `deployment_version`, which can be a git tag (going forward), commit SHA (hopefully never), or branch name (the current value). This tells the playbook which version of the code to pull from repo.
+(*the 'deployment_dest' variable is still there just in case, but we're not going to be changing it*)
 ```
 ---
-deployment_dest: "/opt/PUJ"
-deployment_src: "/home/akarpov/payupjack" # specific to the user performing the deployment
+deployment_version: "finix_api_update"
 
 ```
 
