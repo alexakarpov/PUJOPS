@@ -1,12 +1,15 @@
 from pyvirtualdisplay import Display
+from xvfbwrapper import Xvfb
 from selenium import webdriver
 
-display = Display(visible=0, size=(800, 600))
-display.start()
+vdisplay = Xvfb()
+vdisplay.start()
 
+# launch stuff inside virtual display here
 browser = webdriver.Firefox()
 browser.get('http://localhost:80')
 assert 'Django' in browser.title
 
 browser.quit()
-display.stop()
+
+vdisplay.stop()
