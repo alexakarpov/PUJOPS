@@ -1,0 +1,118 @@
+---
+- hosts: staging
+  vars_files:
+    - vars.yml
+  gather_facts: false
+  become: yes
+  become_user: ubuntu
+
+  tasks:
+    - name: Clone/pull project repo
+      git:
+        repo: "{{ project_repo }}"
+        dest: "{{ install_root }}/PUJ"
+        accept_hostkey: yes
+        version: "{{ repo_version }}"
+        depth: 1
+
+    - name: create the bloody logs dir
+      file:
+        path: "{{ install_root }}/PUJ/logs"
+        state: directory
+        owner: ubuntu
+
+    - name: Install virtualenv
+      pip:
+        name: virtualenv
+        state: present
+
+    - name: Install pipenv
+      pip:
+        name: pipenv
+        state: present
+      become_user: root
+
+    - name: Install uwsgi
+      pip:
+        name: uwsgi
+        state: present
+
+    - name: Initialize pipenv
+      shell: "pipenv install --two"
+      args:
+        chdir: "{{install_root}}/PUJ"
+
+    - name: copy nginx config
+      become: yes
+      become_user: root
+      template: src=files/nginx.j2 dest=/etc/nginx/sites-available/PUJ.conf
+
+    - name: enable nginx site
+      become_user: root
+      file:
+        src: /etc/nginx/sites-available/PUJ.conf
+        dest: /etc/nginx/sites-enabled/PUJ.conf
+        state: link
+        force: true
+      notify:
+      - restart nginx
+
+    - name: django prepare migrations
+      django_manage:
+        command: makemigrations
+        app_path: "{{ install_root }}/PUJ"
+        virtualenv: "{{ venv_dir }}"
+
+    - name: django prepare puj migrations
+      django_manage:
+        command: makemigrations puj
+        app_path: "{{ install_root }}/PUJ"
+        virtualenv: "{{ venv_dir }}"
+
+    - name: django migrate
+      django_manage:
+        command: migrate
+        app_path: "{{ install_root }}/PUJ"
+        virtualenv: "{{ venv_dir }}"
+
+    - name: django migrate puj
+      django_manage:
+        command: migrate puj
+        app_path: "{{ install_root }}/PUJ"
+        virtualenv: "{{ venv_dir }}"
+
+    # - name: django collectstatic
+    #   django_manage:
+    #     command: collectstatic
+    #     app_path: "{{ install_root }}/PUJ"
+    #     virtualenv: "{{ venv_dir }}"
+
+    - name: make sure nginx server is running
+      service: name=nginx state=started enabled=yes
+
+    - name: setup UWSGI
+      become_user: root
+      file:
+        path: /etc/uwsgi/vassals
+        state: directory
+
+    - name: configure UWSGI
+      become_user: root
+      copy:
+        src: files/puj_uwsgi.ini
+        dest: /etc/uwsgi/vassals/puj_uwsgi.ini
+
+    - name: configure to run on init
+      become_user: root
+      lineinfile:
+        path: /etc/rc.local
+        insertbefore: "exit 0"
+        line: /opt/PUJ/puj_run.sh
+
+  handlers:
+    - name: restart nginx
+      service: name=nginx state=restarted
+      become: yes
+      become_user: root
+
+# vim:ft=ansible:
