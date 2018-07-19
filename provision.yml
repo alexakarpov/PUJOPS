@@ -1,4 +1,6 @@
 ---
+- import_playbook: puj_users.yml
+
 - hosts: staging
   vars_files:
     - vars.yml
@@ -25,7 +27,7 @@
     - name: make sure postgresql server is running
       service: name=postgresql state=started
 
-    # WARNING: required before database creation play can run
+      # WARNING: required before database creation play can run
     - name: Install psycopg2
       pip:
         name: psycopg2

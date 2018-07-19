@@ -1,5 +1,0 @@
-[staging]
-ec2-35-183-62-66.ca-central-1.compute.amazonaws.com ansible_user=ubuntu become_user=root ansible_ssh_private_key_file="./secrets/puj_07_2018_ak.pem"
-
-[prod]
-ec2-54-88-246-82.compute-1.amazonaws.com

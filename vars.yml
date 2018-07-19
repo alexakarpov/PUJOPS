@@ -35,7 +35,7 @@ ssh_private_key: ~/.ssh/id_rsa
 static_root: "{{ install_root }}/{{ project_name }}/static"
 
 # the dns name or names (space separated) for your server
-server_name: alexakarpov.xyz www.alexakarpov.xyz
+server_name: ec2-35-183-62-66.ca-central-1.compute.amazonaws.com
 
 # database setup. Note that because this playbook doesn't touch the default
 # postgres pg_hba.conf file, we use local password-based authentication for
@@ -60,7 +60,6 @@ db_password: PayupJack
 # listed in your requirements.txt that depend on system packages.
 system_packages:
   - git
-  - python-pip
   - tree
   - emacs24-nox
   - nginx
@@ -73,6 +72,7 @@ system_packages:
   - libjpeg8-dev
   - zlib1g-dev
   - libfreetype6-dev
+  - zsh
   - liblcms2-dev
   - libwebp-dev
   - tcl8.6-dev

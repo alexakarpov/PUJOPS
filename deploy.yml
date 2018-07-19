@@ -15,7 +15,7 @@
         version: "{{ repo_version }}"
         depth: 1
 
-    - name: create the bloody logs dir
+    - name: create the logs dir
       file:
         path: "{{ install_root }}/PUJ/logs"
         state: directory
@@ -102,12 +102,12 @@
         src: files/puj_uwsgi.ini
         dest: /etc/uwsgi/vassals/puj_uwsgi.ini
 
-    - name: configure to run on init
-      become_user: root
-      lineinfile:
-        path: /etc/rc.local
-        insertbefore: "exit 0"
-        line: /opt/PUJ/puj_run.sh
+    # - name: configure to run on init
+    #   become_user: root
+    #   lineinfile:
+    #     path: /etc/rc.local
+    #     insertbefore: "exit 0"
+    #     line: /opt/PUJ/puj_run.sh
 
   handlers:
     - name: restart nginx
