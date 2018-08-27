@@ -1,5 +1,7 @@
 # Ansible inventory file and playbooks for managing the PayUpJack infrastructure
 
+NOTE: all of this assumes you're in some Unix-like system, Mac OS X or Linux.
+
 ## Deploying users
 ```
 ansible-playbook puj_users.yml -i hosts.yml -vv --extra-vars "puj_hosts=staging"
