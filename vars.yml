@@ -1,6 +1,7 @@
 ---
 # the base path to install to. You should not need to change this.
-install_root: /opt
+install_root: /opt/PUJ
+project_name: PUJ
 
 # the python module path to your project's wsgi file. E.g. for a directory
 # layout like this (assuming `django_hello` is the project_name and top level
@@ -32,10 +33,9 @@ ssh_private_key: ~/.ssh/id_rsa
 # copies static files to, and it must be an absolute path. The default value
 # here assumes that STATIC_ROOT is set in your settings.py like so:
 # STATIC_ROOT = os.path.abspath(os.path.join(BASE_DIR, 'static'))
-static_root: "{{ install_root }}/{{ project_name }}/static"
+static_root: "{{ install_root }}/static"
 
 # the dns name or names (space separated) for your server
-server_name: ec2-35-183-62-66.ca-central-1.compute.amazonaws.com
 
 # database setup. Note that because this playbook doesn't touch the default
 # postgres pg_hba.conf file, we use local password-based authentication for

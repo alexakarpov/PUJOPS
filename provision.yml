@@ -1,7 +1,7 @@
 ---
 - import_playbook: puj_users.yml
 
-- hosts: staging
+- hosts: "{{ puj_hosts | default('alexakarpov') }}"
   vars_files:
     - vars.yml
   become: yes
@@ -17,12 +17,6 @@
     - name: Install system packages
       apt: pkg={{ item }} update-cache=yes
       with_items: "{{ system_packages }}"
-
-    - name: Create directory for app
-      file:
-        path: "{{ install_root }}/PUJ"
-        state: directory
-        owner: ubuntu
 
     - name: make sure postgresql server is running
       service: name=postgresql state=started
