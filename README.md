@@ -22,3 +22,12 @@ this will install all the dependencies, both system and Python packages; and wil
 ```
 ansible-playbook provision.yml -i hosts.yml -K --extra-vars "puj_hosts=staging"
 ```
+## manual deployment of code ##
+
+if you don't have Ansible chops to run the playbooks here, you can perform a manual deployment, once you checked the changes into our Bitbucket repo. It's very simple:
+
+```
+cd /opt/PUJ
+sudo -u ubuntu
+git pull
+```
